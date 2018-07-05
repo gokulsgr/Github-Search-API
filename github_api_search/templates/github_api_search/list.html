@@ -1,0 +1,82 @@
+
+{% extends 'github_api_search/base.html' %}
+{% block content %}
+
+
+
+
+<form method="GET" class="form-inline">
+      <div class="form-group mb-2">
+        <label >From date</label>
+        <input type="date" name="fromDate" id="fromDate" class="form-control">
+      </div>
+     <div class="form-group mb-2">
+        <label >To date</label>
+        <input type="date" name="toDate" id="toDate" class="form-control">
+      </div>
+
+      <button class="btn btn-default"  type="submit">
+        <span>Search</span>
+      </button>
+    
+    </div>
+ </form>
+
+{% if users %}
+
+<div class="alert alert-primary" role="alert">
+ <span class="float-right">{{length}} result(s) fetched</span>
+ <br>
+</div> 
+
+	<ul class="list-group">
+		{% for user in users %}
+			<li class="list-group-item">
+				<img src={{user.avatar_url}} height="60px" width="60px" />
+				<b>User name :</b> {{user.login_name}}
+				<a href={{user.url}} class="float-right btn btn-primary">go to GitHub link</a>
+			</li>
+		{% endfor %}
+	</ul>
+
+		{% if users.has_other_pages %}
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					{% if users.has_previous %}
+						<li class="page-item">
+							<a class="page-link" href="?page={{ users.previous_page_number }}" aria-label="Previous">
+								<span>Previous</span>
+							</a>
+						</li>
+					{% endif %}
+					{% for i in users.paginator.page_range %}
+						{% if users.number == i %}
+							<li class="page-item active">
+								<a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+							</li>
+						{% else %}
+							<li class="page-item" ><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+						{% endif %}
+					{% endfor %}
+					{% if users.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ users.next_page_number }}" aria-label="Next">
+							<span>Next</span>
+						</a>
+					</li>
+				{% endif %}
+				</ul>
+			</nav>
+		{% endif %}
+
+{% else %}
+<div class="alert alert-primary" role="alert">
+ <span class="float-right">0 result(s) fetched</span>
+ <br>
+</div> 
+
+  {% endif %}
+
+
+
+{% endblock %}

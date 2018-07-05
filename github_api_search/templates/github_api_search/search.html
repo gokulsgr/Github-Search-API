@@ -1,0 +1,51 @@
+
+{% extends 'github_api_search/base.html' %}
+ {% block content %}
+
+
+  <div class="mx-auto" style="width: 50%;">
+    <form method="GET" role="form" data-toggle="validator">
+
+      <div class="form-group">
+        <label >Enter the search</label>
+        <div class="help-block with-errors"></div>
+        <input type="text" name="searchText" class="form-control" placeholder="Enter your search here" required>
+      </div>
+      <div class="form-group">
+        <label >Filter by</label>
+        <select class="form-control" name="filter">
+          <option value="in:login">Search by username</option>
+          <option value="in:email">Search by public email</option>
+          <option value="in:fullname">Search by full name</option>
+          <option value="location">Search by location</option>
+        </select>
+      </div>
+      <button class="btn btn-default"  type="submit">
+        <span>Search</span>
+      </button>
+    </div>
+    </form>
+  </div>
+<br>
+  <div class="mx-auto" style="width: 70%;">
+  {% if users %}
+<div class="alert alert-primary" role="alert">
+ <span>Search results for "{{searchText}}"</span>
+ <span class="float-right">{{length}} result(s) fetched</span>
+</div> 
+  <ul class="list-group">
+    {% for item in users %}
+    <li class="list-group-item">
+      <img src={{item.avatar_url}} height="60px" width="60px" />
+      Name : {{item.login}}
+      <a href={{item.html_url}} class="float-right btn btn-primary">go to GitHub link</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %} 
+</div>
+
+
+{% endblock %}
+
+

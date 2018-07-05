@@ -1,0 +1,49 @@
+
+{% extends 'github_api_search/base.html' %}
+{% block content %}
+<form method="GET" class="form-inline">
+      <div class="form-group mb-2">
+        <label >From date</label>
+        <input type="date" name="fromDate" id="fromDate" class="form-control">
+      </div>
+     <div class="form-group mb-2">
+        <label >To date</label>
+        <input type="date" name="toDate" id="toDate" class="form-control">
+      </div>
+
+      <button class="btn btn-default"  type="submit">
+        <span>Search</span>
+      </button>
+    
+    </div>
+</form>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+  	{% if not isDefault %}
+    <h5 >Metrics between {{fromDate}} and {{toDate}}</h5>
+    {% endif %}
+    <p class="lead">
+    	{% if isDefault %}
+			Number of saved items today : {{savedCountCurrentDay}}
+			<br>
+			Number of API calls today : {{apiCallCountCurrentDay}}
+			<br>
+			Number of saved items this month:{{savedCountCurrentDay}}
+			<br>
+			Number of API calls this month:{{apiCallCountCurrentMonth}}
+			<br>
+		{% else %}
+			Number of saved items :{{savedCount}}
+			<br>
+			Number of API calls :{{apiCallCount}}
+		{% endif %}
+    </p>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
